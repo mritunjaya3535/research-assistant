@@ -10,15 +10,20 @@ import java.util.List;
 public class GeminiResponse {
     private List<Candidate> candidateList;
 
-    private static class Candidate {
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Candidate {
         private Content content;
     }
 
-    private static class Content {
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Content {
         private List<Part> parts;
     }
-
-    private static class Part {
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Part {
         private String text;
     }
 
