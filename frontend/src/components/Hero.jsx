@@ -6,7 +6,7 @@ export default function Hero() {
     <section className="w-full bg-slate-50 py-12 md:py-24 flex flex-col items-center justify-center text-center px-4 font-sans">
       <div className="max-w-3xl space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
         
-        <div className="inline-flex items-center rounded-full border border-cyan-100 bg-cyan-50/50 px-4 py-1.5 text-sm font-medium text-cyan-800">
+        <div className="inline-flex items-center rounded-full border border-cyan-400 bg-cyan-50/50 px-4 py-1.5 text-sm font-medium text-cyan-800">
           <Sparkles className="mr-2 h-4 w-4 text-cyan-600" />
           Powered by Google Gemini
         </div>

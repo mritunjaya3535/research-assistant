@@ -3,9 +3,9 @@ import { Settings2, List, FileText, Bookmark, CheckCircle2, SlidersHorizontal, A
 
 export default function FeatureSections() {
   return (
-    <div id="features" className="flex flex-col w-full p-4 font-sans bg-white">
+    <div id="features" className="flex flex-col w-full font-sans bg-white">
       
-      <section className="py-24 px-4 overflow-hidden">
+      <section className="py-24 px-16 overflow-hidden">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16 md:gap-24">
           
           <div className="flex-1 space-y-6">
@@ -62,7 +62,7 @@ export default function FeatureSections() {
         </div>
       </section>
 
-      <section className="py-24 px-4 bg-slate-50 overflow-hidden">
+      <section className="py-24 px-16 bg-slate-50 overflow-hidden">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row-reverse items-center gap-16 md:gap-24">
           
           <div className="flex-1 space-y-6">
@@ -131,7 +131,7 @@ export default function FeatureSections() {
         </div>
       </section>
 
-      <section className="py-24 px-4 overflow-hidden">
+      <section className="py-24 px-16 overflow-hidden">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16 md:gap-24">
           
           <div className="flex-1 space-y-6">
