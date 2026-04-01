@@ -1,6 +1,6 @@
-# WellNest
+# Research Assistant using Spring AI
 
-ResearchAssist is a minimal, AI-powered research assistant designed to perform two high-value tasks: **summarization** and **intelligent suggestion**. It allows users to input raw text or queries and receive concise summaries along with relevant, context-aware suggestions to guide further exploration.
+This Research Assistant is a minimal, AI-powered research assistant designed to perform two high-value tasks: **summarization** and **intelligent suggestion**. It allows users to input raw text or queries and receive concise summaries along with relevant, context-aware suggestions to guide further exploration.
 
 ## 📦 Technologies
 
