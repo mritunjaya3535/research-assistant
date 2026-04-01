@@ -1,8 +1,10 @@
 package com.research.assistant;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 import tools.jackson.databind.ObjectMapper;
 import java.util.Map;
 
@@ -35,6 +37,13 @@ public class ResearchService {
                 .uri(geminiApiUrl + geminiApiKey)
                 .bodyValue(requestBody)
                 .retrieve()
+                .onStatus(HttpStatusCode::is4xxClientError, clientResponse ->
+                        clientResponse.bodyToMono(String.class)
+                                .flatMap(errBody -> {
+                                    System.out.println("Gemini API Error: "+errBody);
+                                    return Mono.error(new RuntimeException("API Error: "+errBody));
+                                })
+                )
                 .bodyToMono(String.class)
                 .block();
         return extractTextFromResponse(response);
