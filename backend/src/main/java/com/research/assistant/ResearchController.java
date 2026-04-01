@@ -16,4 +16,9 @@ public class ResearchController {
         String result = researchService.processContent(request);
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("/health")
+    public ResponseEntity<String> healthCheck() {
+        return ResponseEntity.ok("Server is live");
+    }
 }

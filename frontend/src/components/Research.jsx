@@ -8,8 +8,9 @@ export default function Research() {
 
     const [isLoading, setIsLoading] = useState(false);
     const [activeOperation, setActiveOperation] = useState(null);
+    const [isTakingLong, setIsTakingLong] = useState(false);
 
-    const MAX_WORDS = 150;
+    const MAX_WORDS = 200;
     const currentWordCount = inputText.trim().split(/\s+/).filter(word => word.length > 0).length;
     const isOverLimit = currentWordCount > MAX_WORDS;
 
@@ -18,10 +19,15 @@ export default function Research() {
 
         setIsLoading(true);
         setActiveOperation(operation);
-        setOutputText(''); // Clear previous output
+        setOutputText('');
+        setIsTakingLong(false);
+
+        const delayTimer = setTimeout(() => {
+            setIsTakingLong(true);
+        }, 5000);
 
         try {
-            const response = await fetch('http://localhost:8081/api/research/process', {
+            const response = await fetch(`${process.env.VITE_API_BASE_URL || 'http://localhost:8081'}/api/research/process`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -32,6 +38,12 @@ export default function Research() {
                 }),
             });
 
+            if(response.status==429) {
+                const errMessage = await response.text();
+                setOutputText(`### Whoops!\n\n${errMessage}\n\n*Please try again later or contact the administrator.*`);
+                return;
+            }
+
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -41,10 +53,12 @@ export default function Research() {
 
         } catch (error) {
             console.error("Error processing request:", error);
-            setOutputText("An error occurred while connecting to the backend. Please ensure your Spring Boot server is running on localhost:8081.");
+            setOutputText("An error occurred while connecting to the backend!");
         } finally {
+            clearTimeout(delayTimer);
             setIsLoading(false);
             setActiveOperation(null);
+            setIsTakingLong(false);
         }
     };
 
@@ -124,6 +138,13 @@ export default function Research() {
                                 <p className="text-sm">
                                     {activeOperation === 'suggest' ? 'Generating suggestions...' : 'Analyzing and compressing text...'}
                                 </p>
+                                {isTakingLong && (
+                                    <div className="mt-4 p-3 bg-amber-50 border border-amber-100 rounded-lg max-w-xs text-center animate-[fadeIn_0.5s_ease-in-out]">
+                                        <p className="text-xs text-amber-700">
+                                            The backend server is waking up from inactivity. This first request might take up to 50 seconds. Hang tight!
+                                        </p>
+                                    </div>
+                                )}
                             </div>
                         ) : outputText ? (
                             <div className="absolute inset-0 p-6 overflow-auto">
