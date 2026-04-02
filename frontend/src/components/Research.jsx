@@ -10,6 +10,8 @@ export default function Research() {
     const [activeOperation, setActiveOperation] = useState(null);
     const [isTakingLong, setIsTakingLong] = useState(false);
 
+    const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8081';
+
     const MAX_WORDS = 200;
     const currentWordCount = inputText.trim().split(/\s+/).filter(word => word.length > 0).length;
     const isOverLimit = currentWordCount > MAX_WORDS;
@@ -27,7 +29,9 @@ export default function Research() {
         }, 10000);
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8081'}/api/research/process`, {
+            const healthResponse = await fetch(`${baseUrl}/api/research/health`);
+            console.log(healthResponse.ok ? "Backend is healthy." : "Backend health check failed. "+healthResponse.statusText());
+            const response = await fetch(`${baseUrl}/api/research/process`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
